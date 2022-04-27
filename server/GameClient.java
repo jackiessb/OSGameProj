@@ -18,8 +18,4 @@ public class GameClient {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		GameClient c = new GameClient("localhost", 8300);
-	}
 }

@@ -29,6 +29,8 @@ public class GameServer {
 	}
 	
 	private void startServer() {
+		
+		
 		String response = "";
 		
 		// open a socket
@@ -63,7 +65,7 @@ public class GameServer {
 		PrintWriter writer = new PrintWriter(output, true);
 		
 		// sent to the client when connected
-				writer.println("You have connected!");
+		writer.println("You have connected!");
 		
 		// IN
 		BufferedReader input = new BufferedReader(new InputStreamReader
@@ -75,6 +77,6 @@ public class GameServer {
 	public static void main(String[] args) {
 		// start the server on port x
 		GameServer test = new GameServer(8300);
-		// test.startServer();	
+		test.startServer();	
 	}
 }
