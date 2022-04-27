@@ -2,6 +2,8 @@ package UI;
 
 import javax.swing.*;
 
-public class WinLosePanel extends JPanel {
+import server.GameServer;
 
+public class WinLosePanel extends JPanel {
+	
 }

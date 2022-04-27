@@ -3,6 +3,7 @@ package UI;
 import java.awt.*;
 import javax.swing.*;
 
+import controllers.HomeControl;
 import server.GameClient;
 
 // GUI for the game
@@ -17,8 +18,11 @@ public class GameGUI extends JFrame {
 		CardLayout cardLayout = new CardLayout();
 	    JPanel container = new JPanel(cardLayout);
 		
+	    // build controllers for event handling
+	    HomeControl hc = new HomeControl(container, client);
+	    
 	    // add windows
-		JPanel home = new HomePanel();
+		JPanel home = new HomePanel(client, hc);
 		container.add(home, "1");
 		
 		JPanel game = new GamePanel();
@@ -31,7 +35,7 @@ public class GameGUI extends JFrame {
 		
 		// finalize setup
 		this.add(container);
-		this.setPreferredSize(new Dimension(600, 400));
+		this.setPreferredSize(new Dimension(461, 330));
 		this.pack();
 		this.setVisible(rootPaneCheckingEnabled);
 	}

@@ -10,6 +10,7 @@ public class GameServer {
 	private static ServerSocket socket;
 	private String IPString;
 	private int port;
+	public int players = 0;
 	
 	GameServer(int p) {
 		port = p;
@@ -32,6 +33,7 @@ public class GameServer {
 	
 	private void startServer() {
 		String response = "";
+		boolean noDisconnect = true;
 		
 		// open a socket
 		try {
@@ -40,25 +42,23 @@ public class GameServer {
 			getIP();
 			
 			do {
-				// test open
-				response = comm();
+				// constantly look for new connections
+				connected();
 				
-				if (response != null);
-					System.out.println(response);
-			} while (response.compareTo("close") != 0);
+				// disconnect checker
+				noDisconnect = disconnected();
+			} while (noDisconnect);
 			
-			// test close
-			socket.close();
-			System.out.println("Server closed by Jackson's Ultimate Client.");
 		} catch (IOException e) {
 			System.out.println("Something happened!");
 			e.printStackTrace();
 		}
 	}
 	
-	private String comm() throws IOException {
+	public void connected() throws IOException {
 		Socket incoming = socket.accept(); // get new socket from the ServerSocket
 		System.out.println("New client connected!");
+		players++; // add new player to count
 		
 		// OUT
 		OutputStream output = incoming.getOutputStream();
@@ -66,28 +66,29 @@ public class GameServer {
 		
 		// sent to the client when connected
 		writer.println("You have connected!");
-		
-		// IN
-		BufferedReader input = new BufferedReader(new InputStreamReader
-				(incoming.getInputStream()));
-		
-		return input.readLine();
+	}
+	
+	public boolean disconnected() throws IOException {
+		if (players == 0)
+			return true;
+		else
+			return false;
 	}
 	
 	public static void main(String[] args) throws Exception {
 		GameServer SERVER = new GameServer(8300);
-		SERVER.startServer();
+		// SERVER.startServer();
 		
 		try {
 			while (true) {
 				// Start the game
 				// Have Players connect through Thread handler
-				Player P1 = new Player(socket.accept());
+				// Player P1 = new Player(socket.accept(), SERVER);
 				
-				P1.start();
+				// P1.start();
 			}
 		} finally {
-			
+			socket.close();
 		}
 	}
 }

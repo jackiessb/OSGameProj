@@ -2,25 +2,50 @@ package UI;
 
 import javax.swing.*;
 
+import controllers.HomeControl;
+import server.GameClient;
+import server.GameServer;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Font;
+
 public class HomePanel extends JPanel {
-	private JTextField txtEnterYourName;
+	private GameClient client;
+	private HomeControl hc;
 	
-	public HomePanel() {
+	public HomePanel(GameClient client, HomeControl hc) {
+		// make client information and Control information available.
+		this.client = client;
+		this.hc = hc;
+		
 		setLayout(null);
 		
 		JLabel title = new JLabel("WORD GUESSING GAME");
-		title.setBounds(18, 18, 150, 16);
+		title.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		title.setBounds(18, 18, 235, 18);
 		add(title);
 		
+		JLabel connTitle = new JLabel("Connection Status:");
+		connTitle.setFont(new Font("Lucida Grande", Font.BOLD, 12));
+		connTitle.setBounds(313, 18, 119, 16);
+		add(connTitle);
+		
+		JLabel opponentStatus = new JLabel("");
+		opponentStatus.setFont(new Font("Lucida Grande", Font.ITALIC, 11));
+		opponentStatus.setBounds(313, 37, 61, 16);
+		add(opponentStatus);
+		
 		JButton btnStart = new JButton("START!");
-		btnStart.setBounds(170, 39, 117, 29);
+		btnStart.setBounds(18, 48, 152, 29);
+		btnStart.addActionListener(hc);
 		add(btnStart);
 		
-		txtEnterYourName = new JTextField();
-		txtEnterYourName.setText("Enter your name.");
-		txtEnterYourName.setBounds(18, 39, 150, 26);
-		add(txtEnterYourName);
-		txtEnterYourName.setColumns(10);
-		
+		JButton btnExit = new JButton("EXIT");
+		btnExit.setForeground(Color.RED);
+		btnExit.setBounds(393, 253, 39, 29);
+		btnExit.addActionListener(hc);
+		add(btnExit);
 	}
 }
