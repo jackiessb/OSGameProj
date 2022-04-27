@@ -75,6 +75,6 @@ public class GameServer {
 	public static void main(String[] args) {
 		// start the server on port x
 		GameServer test = new GameServer(8300);
-		// test.startServer();	
+		test.startServer();	
 	}
 }
