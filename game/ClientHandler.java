@@ -6,30 +6,23 @@ import java.util.Random;
 
 import server.GameServer;
 
-// CLIENT HANDLER!
-public class Player extends Thread {
+// CLIENT HANDLER for each player--each client will have their own ID
+public class ClientHandler implements Runnable {
 	private Socket socket;
 	private GameServer server;
 	private BufferedReader input;
 	private PrintWriter output;
-	private int ID; 
-	private Player opponent; // other player
 	
-	public Player(Socket socket, GameServer SERVER) {
+	public ClientHandler(Socket socket, GameServer SERVER) {
 		this.socket = socket;
 		this.server = SERVER;
-		
-		// set ID
-		Random r = new Random();
-		int upperbound = 100000;
-		int ID = r.nextInt(upperbound);
-		
-		// set up interactability with server
+				
+		// set up comms with server
 		try {
 			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			output = new PrintWriter(socket.getOutputStream(), true);
 		} catch (IOException e) {
-			System.out.println("Having trouble connecting... (Player end)");
+			System.out.println("Having trouble connecting... (ClientHandler end)");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -45,7 +38,6 @@ public class Player extends Thread {
 	public void run() {
 		System.out.println("Player is active!");
 		
-		// start looking for an opponent, tell the GUI that we are
-		
+		// start looking for an opponent, tell the GUI that we are actively searching
 	}
 }

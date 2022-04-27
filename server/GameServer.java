@@ -2,15 +2,17 @@ package server;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
-import game.Player;
+import game.ClientHandler;
 
 // Server back-end
 public class GameServer {
 	private static ServerSocket socket;
 	private String IPString;
 	private int port;
-	public int players = 0;
+	// this list of players is public so that all clients know who is out there!
+	public static ArrayList<ClientHandler> players = new ArrayList<>(); 
 	
 	GameServer(int p) {
 		port = p;
@@ -32,7 +34,6 @@ public class GameServer {
 	}
 	
 	private void startServer() {
-		String response = "";
 		boolean noDisconnect = true;
 		
 		// open a socket
@@ -58,7 +59,6 @@ public class GameServer {
 	public void connected() throws IOException {
 		Socket incoming = socket.accept(); // get new socket from the ServerSocket
 		System.out.println("New client connected!");
-		players++; // add new player to count
 		
 		// OUT
 		OutputStream output = incoming.getOutputStream();
@@ -69,23 +69,23 @@ public class GameServer {
 	}
 	
 	public boolean disconnected() throws IOException {
-		if (players == 0)
-			return true;
-		else
-			return false;
+		return true;
 	}
 	
 	public static void main(String[] args) throws Exception {
 		GameServer SERVER = new GameServer(8300);
-		// SERVER.startServer();
+		SERVER.startServer();
 		
 		try {
 			while (true) {
 				// Start the game
 				// Have Players connect through Thread handler
-				// Player P1 = new Player(socket.accept(), SERVER);
+				ClientHandler player = new ClientHandler(socket.accept(), SERVER);
 				
-				// P1.start();
+				players.add(player);
+				
+				// Start player events
+				player.run();
 			}
 		} finally {
 			socket.close();
