@@ -3,7 +3,7 @@ package server;
 import java.io.*;
 import java.net.*;
 
-// Client-side gritty details for the Player 
+// Client-side grit details for the Player 
 public class GameClient {
 	private Socket socket;
 	
@@ -11,9 +11,15 @@ public class GameClient {
 		// tying socket together...
 		try {
 			this.socket = new Socket(address, port);
+			
+			System.out.println("Connection Established!");
 		} catch (IOException e) {
 			System.out.println("Client could not connect!");
 			e.printStackTrace();
 		}
+	}
+	
+	public static void main(String[] args) {
+		GameClient c = new GameClient("localhost", 8300);
 	}
 }
