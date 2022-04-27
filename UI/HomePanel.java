@@ -1,8 +1,6 @@
 package UI;
 
 import javax.swing.*;
-
-import controllers.HomeControl;
 import server.GameClient;
 import server.GameServer;
 
@@ -13,12 +11,10 @@ import java.awt.Font;
 
 public class HomePanel extends JPanel {
 	private GameClient client;
-	private HomeControl hc;
 	
-	public HomePanel(GameClient client, HomeControl hc) {
+	public HomePanel(GameClient client) {
 		// make client information and Control information available.
 		this.client = client;
-		this.hc = hc;
 		
 		setLayout(null);
 		
@@ -39,13 +35,11 @@ public class HomePanel extends JPanel {
 		
 		JButton btnStart = new JButton("START!");
 		btnStart.setBounds(18, 48, 152, 29);
-		btnStart.addActionListener(hc);
 		add(btnStart);
 		
 		JButton btnExit = new JButton("EXIT");
 		btnExit.setForeground(Color.RED);
 		btnExit.setBounds(393, 253, 39, 29);
-		btnExit.addActionListener(hc);
 		add(btnExit);
 	}
 }
