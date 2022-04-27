@@ -3,6 +3,8 @@ package server;
 import java.io.*;
 import java.net.*;
 
+import game.Player;
+
 // Server back-end
 public class GameServer {
 	private static ServerSocket socket;
@@ -29,8 +31,6 @@ public class GameServer {
 	}
 	
 	private void startServer() {
-		
-		
 		String response = "";
 		
 		// open a socket
@@ -74,9 +74,20 @@ public class GameServer {
 		return input.readLine();
 	}
 	
-	public static void main(String[] args) {
-		// start the server on port x
-		GameServer test = new GameServer(8300);
-		test.startServer();	
+	public static void main(String[] args) throws Exception {
+		GameServer SERVER = new GameServer(8300);
+		SERVER.startServer();
+		
+		try {
+			while (true) {
+				// Start the game
+				// Have Players connect through Thread handler
+				Player P1 = new Player(socket.accept());
+				
+				P1.start();
+			}
+		} finally {
+			
+		}
 	}
 }
