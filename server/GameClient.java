@@ -20,13 +20,17 @@ public class GameClient {
 		try {
 			// THIS SHOULD HAPPEN ONCE!
 			this.socket = new Socket(address, port);
-			output = socket.getOutputStream();
 			
+			output = socket.getOutputStream();
 			DataOutputStream IDSend = new DataOutputStream(output);
 			
 			// send all client information
 			IDSend.writeInt(ID);
 			IDSend.flush();
+			
+			// get connected message
+			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			System.out.println(input.readLine());
 			
 			// constant comm
 			while (true) {
@@ -40,14 +44,6 @@ public class GameClient {
 	
 	public int getID() {
 		return ID;
-	}
-	
-	public GameClient getOpponentData() {
-		return null;
-	}
-	
-	public void sendOpponentData() {
-		
 	}
 	
 	public int createID() {

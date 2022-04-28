@@ -15,21 +15,17 @@ import server.GameServer;
 public class ClientHandler implements Runnable {
 	private Socket socket;
 	private GameServer server;
-	private BufferedReader input;
 	private int respectiveClientID;
 	
 	public ClientHandler(Socket socket, GameServer SERVER, int clientID) {
-		this.socket = socket;
-		this.server = SERVER;
-		respectiveClientID = clientID;
-				
+		setServer(SERVER);
+		setSocket(socket);
+		
 		// set up comms with server
 		try {
-			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			
 			// OUT
-			OutputStream output = socket.getOutputStream();
-			output = socket.getOutputStream();
+			OutputStream output = this.socket.getOutputStream();
+			output = this.socket.getOutputStream();
 			PrintWriter writer = new PrintWriter(output, true);
 			
 			// sent to the client when connected
@@ -45,6 +41,14 @@ public class ClientHandler implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void setSocket(Socket s) {
+		socket = s;
+	}
+	
+	public void setServer(GameServer ser) {
+		server = ser;
 	}
 	
 	@Override // override Thread 

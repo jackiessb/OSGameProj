@@ -40,6 +40,14 @@ public class HomePanel extends JPanel {
 		JButton btnExit = new JButton("EXIT");
 		btnExit.setForeground(Color.RED);
 		btnExit.setBounds(393, 253, 39, 29);
+		btnExit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+			
+		});
 		add(btnExit);
 	}
 }
