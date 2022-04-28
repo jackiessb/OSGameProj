@@ -34,7 +34,7 @@ public class GameGUI extends JFrame {
 		this.setVisible(rootPaneCheckingEnabled);
 		
 		// start client, send all data to server
-		client = new GameClient("localhost", 8300); // start client
+		client = new GameClient("192.168.0.16", 8300); // start client
 	}
 	
 	public static void main(String[] args) {

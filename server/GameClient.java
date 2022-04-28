@@ -22,11 +22,11 @@ public class GameClient {
 			this.socket = new Socket(address, port);
 			output = socket.getOutputStream();
 			
-			ObjectOutputStream objectSend = new ObjectOutputStream(output);
+			DataOutputStream IDSend = new DataOutputStream(output);
 			
 			// send all client information
-			objectSend.writeObject(this);
-			objectSend.flush();
+			IDSend.writeInt(ID);
+			IDSend.flush();
 			
 			// constant comm
 			while (true) {

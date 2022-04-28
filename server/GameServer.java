@@ -14,7 +14,7 @@ public class GameServer {
 	private int port;
 	// this list of players is public so that all clients know who is out there!
 	public static ArrayList<ClientHandler> players = new ArrayList<>(); 
-	private static GameClient incomingClientData;
+	private static int IDStorage;
 	
 	GameServer(int p) {
 		port = p;
@@ -50,7 +50,7 @@ public class GameServer {
 				connected();
 				
 				// get new connection data
-				incomingClientData = getClientData();
+				IDStorage = getClientData();
 				
 				// disconnect checker
 				noDisconnect = disconnected();
@@ -80,15 +80,15 @@ public class GameServer {
 	
 	// IOException is for when no connection found, ClassNotFoundException is
 	// for class related errors
-	public GameClient getClientData() throws IOException, ClassNotFoundException {
+	public int getClientData() throws IOException, ClassNotFoundException {
 		Socket incoming = socket.accept();
 		
 		InputStream input = incoming.getInputStream();
-		ObjectInputStream objectIn = new ObjectInputStream(input);
+		DataInputStream dataIn = new DataInputStream(input);
 		
-		GameClient connectedPlayer = (GameClient)objectIn.readObject();
+		int ID = dataIn.readInt();
 		
-		return connectedPlayer;
+		return ID;
 	}
 	
 	public void sendClientData() throws IOException, ClassNotFoundException {
@@ -97,21 +97,21 @@ public class GameServer {
 	
 	public static void main(String[] args) throws Exception {
 		GameServer SERVER = new GameServer(8300);
-		SERVER.startServer();
+		// SERVER.startServer();
 		
 		try {
 			while (true) {
 				// Start the game
 				// Have Players connect through Thread handler
-				ClientHandler player = new ClientHandler(socket.accept(), SERVER, incomingClientData.getID());
+				// ClientHandler player = new ClientHandler(socket.accept(), SERVER, incomingClientData.getID());
 				
-				players.add(player);
+				// players.add(player);
 				
 				// Start player events
-				player.run();
+				// player.run();
 			}
 		} finally {
-			socket.close();
+			// socket.close();
 		}
 	}
 }
