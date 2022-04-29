@@ -14,18 +14,12 @@ public class GameGUI extends JFrame {
 		// set up layout
 		CardLayout cardLayout = new CardLayout();
 	    JPanel container = new JPanel(cardLayout);
-	    
+	      
 	    // add windows
-		JPanel home = new HomePanel(client);
-		container.add(home, "1");
+		HomePanel home = new HomePanel();
+		container.add(home, "0");
 		
-		JPanel game = new GamePanel();
-		container.add(game, "2");
-		
-		JPanel winLose = new WinLosePanel();
-		container.add(winLose, "3");
-		
-		cardLayout.show(container, "1");
+		cardLayout.show(container, "0");
 		
 		// finalize setup
 		this.add(container);
@@ -34,7 +28,7 @@ public class GameGUI extends JFrame {
 		this.setVisible(rootPaneCheckingEnabled);
 		
 		// start client, send all data to server
-		client = new GameClient("192.168.0.16", 8300); // start client
+		client = new GameClient("192.168.0.16", 8300, container); // start client
 	}
 	
 	public static void main(String[] args) {
